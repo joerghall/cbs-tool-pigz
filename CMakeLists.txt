@@ -123,8 +123,8 @@ add_custom_target(package_ninja
 )
 
 add_custom_target(publish_ninja
-    COMMAND ${PYTHON2} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-windows.tgz --url https://h1grid.com:443/artifactory/cbt/devtools/ninja/${NINJA_VERSION_PACKAGE}/ninja-${NINJA_VERSION_PACKAGE}-windows.tgz
-    COMMAND ${PYTHON2} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-linux.tgz --url https://h1grid.com:443/artifactory/cbt/devtools/ninja/${NINJA_VERSION_PACKAGE}/ninja-${NINJA_VERSION_PACKAGE}-linux.tgz
-    COMMAND ${PYTHON2} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-osx.tgz --url https://h1grid.com:443/artifactory/cbt/devtools/ninja/${NINJA_VERSION_PACKAGE}/ninja-${NINJA_VERSION_PACKAGE}-osx.tgz
+    COMMAND ${python2_BIN} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-windows.tgz --url https://h1grid.com:443/artifactory/cbt/devtools/ninja/${NINJA_VERSION_PACKAGE}/ninja-${NINJA_VERSION_PACKAGE}-windows.tgz
+    COMMAND ${python2_BIN} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-linux.tgz --url https://h1grid.com:443/artifactory/cbt/devtools/ninja/${NINJA_VERSION_PACKAGE}/ninja-${NINJA_VERSION_PACKAGE}-linux.tgz
+    COMMAND ${python2_BIN} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-osx.tgz --url https://h1grid.com:443/artifactory/cbt/devtools/ninja/${NINJA_VERSION_PACKAGE}/ninja-${NINJA_VERSION_PACKAGE}-osx.tgz
     DEPENDS package_ninja
 )

@@ -38,7 +38,7 @@ if(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET 10.10)
 endif()
 
-project(pybuild)
+project(cbt-tool-ninja)
 
 enable_testing()
 

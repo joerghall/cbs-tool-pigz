@@ -30,13 +30,23 @@ else ()
     message(FATAL_ERROR "Unable to find buildtools, please check if the submodule is initialized")
 endif ()
 
-#discover_source_version()
+if(BUILD_WINDOWS)
+    add_artifact("python2" "https://h1grid.com/artifactory/cbt/devtools/python2/2.7.14.43.rcd588a99/python2-2.7.14.43.rcd588a99-windows.tgz" ${ARTIFACT_TOOLSETS_CACHE} "python2/2.7.14.43.rcd588a99/windows" "python2-2.7.14.43.rcd588a99-windows.tgz")
+#    add_artifact("ninja" "https://h1grid.com:443/artifactory/cbt/devtools/ninja/1.8.2/ninja-1.8.2-windows.tgz" ${ARTIFACT_TOOLSETS_CACHE} "ninja/1.8.2/windows" "ninja-1.8.2-windows.tgz")
+#    add_artifact("pigz" "https://h1grid.com:443/artifactory/cbt/devtools/pigz/2.3.1/pigz-2.3.1-windows.tgz" ${ARTIFACT_TOOLSETS_CACHE} "pigz/2.3.1/windows" "pigz-2.3.1-windows.tgz")
+elseif(BUILD_OSX)
+    add_artifact("python2" "https://h1grid.com/artifactory/cbt/devtools/python2/2.7.14.43.rcd588a99/python2-2.7.14.43.rcd588a99-osx.tgz" ${ARTIFACT_TOOLSETS_CACHE} "python2/2.7.14.43.rcd588a99/osx" "python2-2.7.14.43.rcd588a99-osx.tgz")
+#    add_artifact("ninja" "https://h1grid.com:443/artifactory/cbt/devtools/ninja/1.8.2/ninja-1.8.2-osx.tgz" ${ARTIFACT_TOOLSETS_CACHE} "ninja/1.8.2/osx" "ninja-1.8.2-osx.tgz")
+#    add_artifact("pigz" "https://h1grid.com:443/artifactory/cbt/devtools/pigz/2.3.4/pigz-2.3.4-osx.tgz" ${ARTIFACT_TOOLSETS_CACHE} "pigz/2.3.4/osx" "pigz-2.3.4-osx.tgz")
+elseif(BUILD_LINUX)
+    add_artifact("python2" "https://h1grid.com/artifactory/cbt/devtools/python2/2.7.14.43.rcd588a99/python2-2.7.14.43.rcd588a99-linux.tgz" ${ARTIFACT_TOOLSETS_CACHE} "python2/2.7.14.43.rcd588a99/linux" "python2-2.7.14.43.rcd588a99-linux.tgz")
+#    add_artifact("ninja" "https://h1grid.com:443/artifactory/cbt/devtools/ninja/1.8.2/ninja-1.8.2-linux.tgz" ${ARTIFACT_TOOLSETS_CACHE} "ninja/1.8.2/linux" "ninja-1.8.2-windows.tgz")
+#    add_artifact("pigz" "https://h1grid.com:443/artifactory/cbt/devtools/pigz/2.3.1/pigz-2.3.4-linux.tgz" ${ARTIFACT_TOOLSETS_CACHE} "pigz/2.3.4/linux" "pigz-2.3.4-windows.tgz")
+endif()
+
+include(python2)
 
 set(CMAKE_CXX_STANDARD 14)
-
-if(APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.10)
-endif()
 
 project(cbt-tool-ninja)
 

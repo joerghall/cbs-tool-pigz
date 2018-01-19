@@ -1,0 +1,23 @@
+language: c++
+os:
+- linux
+- osx
+sudo: required
+group: travis_lts
+git:
+  depth: 1000000
+env:
+  global:
+    - secure: "Q+PL0HmOIH/zawwnB8pT37MeBJq9n5VhMc3S5vYYOdy/nM2tbH7hsT0UI6+NConBSBVVHeTCEQ72+pbEjzcUsZF/fBsONkoBtgbDU2hDjooC0vNxpi54SYd9l3VIDDI4qW4gIyaXotVUOIOWDSUeQT26qdaJVjlL+15loH2fMqqidrgFZencqCSpGCFRdIQAY4uERDEgL12Wu4KmqJN0P46PAHOVq9g5Vi9VFJA4pEM7FZ2a6AZg+maXLxx1jEpvkpbN9ghNrkPwQT5zOkrAKzOYc9vdBNJaXIwBCx1OUMd8h9V7EjxtmX61fy39rsTDOF7RX2+jdE81dhiGuDdda1OXNFz/X3/MLtD61zZ7zh/bTwugBzfTjdmOVuZqdlhRQKnc1dsNWZwR5v/0A3z0MhE7Pfpu4XQmS6c9zWDCiA2u4djo0tpr/WOnK+7I1y0tsuW2RKEgCQYbqEQJfK6pok+OCgeIxYpoiRVZYTrYFDnB/73Q1Ws8AKNp8qLbRRU3lwqafFjCadF28gcjacg04HH2PqJaCaIQegn81W0g6bMVeGHrdeyaR+mjr7bkoVK057lKUREWVcy4vNbKsCWtSrCisryVJdxeqyctqwtA8AFk/4CMN5uDC3k0d/iTjjqGyTAthr6tEOxmP0/J4jgbpifSTJUclBEwPmyguZkLNB4="
+    - apiuser=joerghall
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install openssl readline ; fi
+script:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker run -v ${TRAVIS_BUILD_DIR}:/root/pypack
+  -e apipwd -e apiuser -e TRAVIS_BRANCH --rm -t jhhj/cbt-pypack-centos7:1 /bin/bash
+  -c "mkdir /root/pypack/build && cd /root/pypack/build && export PATH=/opt/rh/devtoolset-6/root/usr/bin:$PATH
+  && cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . --target publish_python"
+  ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir ${TRAVIS_BUILD_DIR}/build && cd
+  ${TRAVIS_BUILD_DIR}/build && cmake .. && cmake --build . --target publish_python
+  ; fi

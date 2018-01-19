@@ -109,7 +109,7 @@ add_custom_target(package_ninja
     COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-linux.tgz linux/ninja
     COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/ninja-${NINJA_VERSION_PACKAGE}-osx.tgz osx/ninja
     WORKING_DIRECTORY ${SOURCE_SRC_DIR}
-    DEPENDS build_ninja
+    DEPENDS unpack_ninja
 )
 
 add_custom_target(publish_ninja

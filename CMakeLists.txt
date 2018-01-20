@@ -114,12 +114,24 @@ add_custom_target(unpack_ninja
     DEPENDS download_ninja
 )
 
-add_custom_target(package_ninja
+add_custom_target(package_ninja_windows
     COMMAND ${CMAKE_COMMAND} -E make_directory ${SOURCE_UPLOAD_DIR}
-    COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-windows.tgz windows/${PACKAGE_NAME}
-    COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-linux.tgz linux/${PACKAGE_NAME}
-    COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-osx.tgz osx/${PACKAGE_NAME}
-    WORKING_DIRECTORY ${SOURCE_SRC_DIR}
+    COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-windows.tgz ${PACKAGE_NAME}
+    WORKING_DIRECTORY ${SOURCE_SRC_DIR}/windows
+    DEPENDS unpack_ninja
+)
+
+add_custom_target(package_ninja_linux
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${SOURCE_UPLOAD_DIR}
+    COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-linux.tgz ${PACKAGE_NAME}
+    WORKING_DIRECTORY ${SOURCE_SRC_DIR}/linux
+    DEPENDS unpack_ninja
+)
+
+add_custom_target(package_ninja_osx
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${SOURCE_UPLOAD_DIR}
+    COMMAND ${CMAKE_COMMAND} -E tar czf ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-osx.tgz ${PACKAGE_NAME}
+    WORKING_DIRECTORY ${SOURCE_SRC_DIR}/osx
     DEPENDS unpack_ninja
 )
 
@@ -127,5 +139,5 @@ add_custom_target(publish_ninja
     COMMAND ${python2_BIN} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-windows.tgz --url ${PACKAGE_PUBLISH_URL}/${PACKAGE_NAME}/${PACKAGE_VERSION_PACKAGE}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-windows.tgz
     COMMAND ${python2_BIN} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-linux.tgz --url ${PACKAGE_PUBLISH_URL}/${PACKAGE_NAME}/${PACKAGE_VERSION_PACKAGE}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-linux.tgz
     COMMAND ${python2_BIN} ${upload_py_COMMAND} --file ${SOURCE_UPLOAD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-osx.tgz --url ${PACKAGE_PUBLISH_URL}/${PACKAGE_NAME}/${PACKAGE_VERSION_PACKAGE}/${PACKAGE_NAME}-${PACKAGE_VERSION_PACKAGE}-osx.tgz
-    DEPENDS package_ninja
+    DEPENDS package_ninja_windows package_ninja_linux package_ninja_osx
 )
